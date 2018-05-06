@@ -1,0 +1,44 @@
+@import "_presets/index";
+@import "_mixins/index";
+@import "_animation/index";
+
+// color
+$main-bg-color: #333;
+$main-bd-color: #fff;
+
+// preset
+* {
+  @extend %preset;
+}
+
+body {
+  background: $main-bg-color;
+  margin: 20px;
+  padding: 0;
+
+  .container {
+    max-width: 700px;
+    background: $main-bd-color;
+    border: 3px solid $main-bd-color;
+    @include center;
+
+    .main-img {
+      height: 400px;
+      margin-bottom: 5px;
+      img {
+        transition: opacity .5s ease-in;
+        opacity: 0;
+        @include justifyImg;
+      }
+    }
+
+    .imgs {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-gap: 5px;
+      img {
+        @include justifyImg;
+      }
+    }
+  }
+}
