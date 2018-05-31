@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "task": "node --experimental-modules gulpfile.mjs",
-    "server": "http-server",
+    "server": "http-server"
   },
   "author": "nfwyst",
   "license": "ISC",
