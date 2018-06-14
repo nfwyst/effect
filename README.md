@@ -9,3 +9,5 @@ info card in mvvm
 ![visualizer](./demo.gif)
 5. **mvvm-data-bind**
 MVVM双向数据绑定
+6. **rbcompiler**
+基于有限状态自动机的手工词法分析器
