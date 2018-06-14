@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>MVVM 数据绑定</title>
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <h1 class="title">{{ title }}</h1>
+      <section class="content">{{ content }}</section>
+    </div>
+    <section>
+      {{ content }}
+    </section>
+  </div>
+  <script src="./index.js"></script>
+  <script>
+    const instance = new Vue({
+        el: '.container',
+        data: {
+          title: '古老的诗句',
+          content: '慈母手中线, 游子身上衣'
+        }
+    });
+
+    setTimeout(function () {
+      instance.title = '你需要一点理想'
+    }, 1000)
+
+    setTimeout(function () {
+      instance.content = '首先需要知道, 理想是什么'
+    }, 3000)
+  </script>
+</body>
+</html>
