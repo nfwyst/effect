@@ -30,7 +30,7 @@ class Vue {
     })
   }
   emit(key, value) { // 响应数据变化
-    if (!this[key].traversed) { // 如果当前属性已经绑定到对应的 DOM 元素上则不再遍历 DOM
+    if (!this.view[key].traversed) { // 如果当前属性已经绑定到对应的 DOM 元素上则不再遍历 DOM
       this.traverse(this.__el__, key)
     }
     this.view[key].traversed = true

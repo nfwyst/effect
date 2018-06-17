@@ -11,3 +11,5 @@ info card in mvvm
 MVVM双向数据绑定
 6. **rbcompiler**
 基于有限状态自动机的手工词法分析器
+7. **snow**
+animation with functional programming
