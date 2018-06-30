@@ -13,3 +13,5 @@ MVVM双向数据绑定
 基于有限状态自动机的手工词法分析器
 7. **snow**
 animation with functional programming
+8. **dialog**
+弹出框组件
