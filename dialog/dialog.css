@@ -1,0 +1,50 @@
+html, body, div, h3 {
+  padding: 0;
+  margin: 0;
+}
+
+.dialog-wrap {
+  display: none;
+}
+
+.dialog {
+  border: 1px solid #ccc;
+  width: 300px;
+  height: 300px;
+  position: absolute;
+  background-color: rgba(0, 0, 0, .1);
+  left: 50%;
+  top: 50%;
+  transform: translate3d(-50%, -50%, 0);
+  z-index: 1000;
+}
+
+.dialog .dialog-h {
+  border-bottom: 1px solid #ccc;
+  height: 30px;
+  line-height: 30px;
+  position: relative;
+}
+
+.dialog .dialog-b {
+  height: 269px;
+}
+
+.dialog-h .btn-close {
+  position: absolute;
+  right: 5px;
+  top: 0px;
+  cursor: pointer;
+}
+
+.dialog-cover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #eee;
+  z-index: 100;
+  opacity: .5;
+  filter: alpha(opacity=50);
+}

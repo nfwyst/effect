@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>dialog</title>
+    <link rel="stylesheet" href="dialog.css">
+  </head>
+  <body>
+    <input type="button" value="弹出对话框" id="btn"/>
+    <div class="dialog-wrap" id="dialogBox" title="用户输入">
+      <p>hello world</p>
+    </div>
+  </body>
+
+  <script src="dialog.js"></script>
+  <script charset="utf-8">
+    window.onload = function() {
+      var btn = document.getElementById('btn');
+      var dialog = new Module.Dialog('dialogBox');
+      btn.onclick = function() {
+        dialog.show();
+      }
+    }
+  </script>
+</html>
