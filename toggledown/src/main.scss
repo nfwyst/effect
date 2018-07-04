@@ -1,0 +1,142 @@
+@mixin angle {
+  transition: all .3s linear;
+  border-right: 6px solid transparent;
+  border-left: 6px solid transparent;
+  cursor: pointer;
+}
+@mixin align {
+  display: inline-block;
+  vertical-align: middle;
+}
+@mixin reset {
+  padding: 0;
+  margin: 0;
+}
+@mixin animate {
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+// animation
+@-webkit-keyframes slideInLeft {
+  from {
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
+    visibility: visible;
+  }
+  to {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+@keyframes slideInLeft {
+  from {
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
+    visibility: visible;
+  }
+  to {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-webkit-keyframes slideOutLeft {
+  from {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    visibility: hidden;
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+
+@keyframes slideOutLeft {
+  from {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    visibility: hidden;
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+
+#container {
+  @include align;
+  font-size: 16px;
+  .box {
+    border-radius: 4px;
+    @include animate;
+    animation-name: fadeIn;
+    .selector {
+      resize: both;
+      cursor: text;
+      outline: none;
+      border: 1px solid rgba(0, 0, 0, .1);
+      padding: 4px 10px;
+      min-width: 100px;
+      @include align;
+      transition: all .3s linear;
+      &:focus {
+        box-shadow: 0 0 5px cyan;
+      }
+    }
+    .angle-down {
+      border-top: 6px solid #000;
+      @include angle;
+      @include align;
+    }
+    .angle-up {
+      border-bottom: 6px solid #000;
+      @include angle;
+      @include align;
+    }
+  }
+  .result {
+    list-style: none;
+    padding-top: 3px;
+    @include reset;
+    max-height: 153px;
+    overflow: scroll;
+    li {
+      padding: 4px 10px;
+      transition: all .3s linear;
+      cursor: pointer;
+      @include animate;
+      display: none;
+      &.slideInLeft {
+        animation-name: slideInLeft;
+      }
+      &.slideOutLeft {
+        animation-name: slideOutLeft;
+      }
+      &:hover {
+        background: rgba(100, 100, 100, .1);
+      }
+      .hight {
+        color: red;
+      }
+
+    }
+  }
+}

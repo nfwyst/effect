@@ -1,0 +1,107 @@
+@-webkit-keyframes slideInLeft {
+  from {
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
+    visibility: visible; }
+  to {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0); } }
+@keyframes slideInLeft {
+  from {
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
+    visibility: visible; }
+  to {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0); } }
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0; }
+  to {
+    opacity: 1; } }
+@keyframes fadeIn {
+  from {
+    opacity: 0; }
+  to {
+    opacity: 1; } }
+@-webkit-keyframes slideOutLeft {
+  from {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0); }
+  to {
+    visibility: hidden;
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0); } }
+@keyframes slideOutLeft {
+  from {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0); }
+  to {
+    visibility: hidden;
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0); } }
+#container {
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 16px; }
+  #container .box {
+    border-radius: 4px;
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    animation-name: fadeIn; }
+    #container .box .selector {
+      resize: both;
+      cursor: text;
+      outline: none;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      padding: 4px 10px;
+      min-width: 100px;
+      display: inline-block;
+      vertical-align: middle;
+      transition: all .3s linear; }
+      #container .box .selector:focus {
+        box-shadow: 0 0 5px cyan; }
+    #container .box .angle-down {
+      border-top: 6px solid #000;
+      transition: all .3s linear;
+      border-right: 6px solid transparent;
+      border-left: 6px solid transparent;
+      cursor: pointer;
+      display: inline-block;
+      vertical-align: middle; }
+    #container .box .angle-up {
+      border-bottom: 6px solid #000;
+      transition: all .3s linear;
+      border-right: 6px solid transparent;
+      border-left: 6px solid transparent;
+      cursor: pointer;
+      display: inline-block;
+      vertical-align: middle; }
+  #container .result {
+    list-style: none;
+    padding-top: 3px;
+    padding: 0;
+    margin: 0;
+    max-height: 153px;
+    overflow: scroll; }
+    #container .result li {
+      padding: 4px 10px;
+      transition: all .3s linear;
+      cursor: pointer;
+      -webkit-animation-duration: 1s;
+      animation-duration: 1s;
+      -webkit-animation-fill-mode: both;
+      animation-fill-mode: both;
+      display: none; }
+      #container .result li.slideInLeft {
+        animation-name: slideInLeft; }
+      #container .result li.slideOutLeft {
+        animation-name: slideOutLeft; }
+      #container .result li:hover {
+        background: rgba(100, 100, 100, 0.1); }
+      #container .result li .hight {
+        color: red; }
+
+/*# sourceMappingURL=main.css.map */
