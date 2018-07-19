@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width" />
+  <title>Animate</title>
+  <style type="text/css" media="screen">
+    #container {
+      position: absolute;
+      background: pink;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="container">
+    hello container
+  </div>
+  <script charset="utf-8">
+    class Strategies extends Object
+    {
+      static linear(t, b, c, d)
+      {
+        return c * t / d + b;
+      }
+      static easeIn(t, b, c, d)
+      {
+        return c * (t /= d) * t + b;
+      }
+      static strongEaseIn(t, b, c, d)
+      {
+        return c * (t /= d) * t * t * t * t + b;
+      }
+      static strongEaseOut(t, b, c, d)
+      {
+        return c * ((t = t / d - 1) * t * t * t * t + 1) + b;
+      }
+      static sineaseIn(t, b, c, d)
+      {
+        return c * (t /= d) * t * t + b;
+      }
+      static sineaseOut(t, b, c, d)
+      {
+        return c * ((t = t / d - 1) * t * t + 1) + b;
+      }
+    }
+
+    class Animate extends Object
+    {
+      constructor(el)
+      {
+        super(el);
+        this.el = el;
+        this.startTime = 0;
+        this.duration = 0;
+        this.startPos = 0;
+        this.endPos = 0;
+        this.propertyName = null;
+        this.func = null;
+      }
+
+      start(propertyName, endPos, duration, func)
+      {
+        this.startTime = +new Date;
+        this.duration = duration;
+        this.startPos = this.el.getBoundingClientRect()[propertyName];
+        this.endPos = endPos;
+        this.propertyName = propertyName;
+        this.func = Strategies[func];
+        const timer = setInterval(() =>
+        {
+          if (this.step() === false)
+          {
+            clearInterval(timer);
+          }
+        }, 19);
+      }
+
+      step()
+      {
+        const now = +new Date;
+        if (now >= this.startTime + this.duration)
+        {
+          this.update(this.endPos);
+          return false;
+        }
+        else
+        {
+          const pos = this.func(now - this.startTime, this.startPos, this.endPos -
+            this.startPos, this.duration);
+          this.update(pos);
+        }
+      }
+
+      update(pos)
+      {
+        this.el.style[this.propertyName] = `${pos}px`;
+      }
+    }
+
+    var div = document.getElementById('container');
+    var animate = new Animate(div);
+    animate.start('left', 500, 1000, 'strongEaseOut');
+  </script>
+</body>
+
+</html>

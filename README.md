@@ -16,3 +16,5 @@ animation with functional programming
 弹出框组件
 9. toggledown
 toggledown 组件
+10. Animate
+缓动动画
