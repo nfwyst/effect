@@ -18,3 +18,5 @@ animation with functional programming
 toggledown 组件
 10. Animate
 缓动动画
+11. redux
+一个redux的实现
