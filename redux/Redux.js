@@ -29,4 +29,14 @@ module.exports = class Redux extends EventEmitter{
     this.emit('change', this.state);
     return this;
   }
+
+  addMiddleWare(middles) {
+    if (typeof middles === 'function') {
+      middles(this);
+    } else if(middles instanceof Array) {
+      middles.reverse().forEach(middle => {
+        middle(this);
+      });
+    }
+  }
 }
