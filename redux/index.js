@@ -1,6 +1,4 @@
-const Redux = require('./Redux.js');
-
-const store = new Redux({ name: 'xiao ming', age: 20 });
+const { createStore, combineReducer } = require('./Redux.js');
 
 const nameUpdater = (state, action) => {
   switch (action.type) {
@@ -21,11 +19,36 @@ const ageUpdater = (state, action) => {
   }
 }
 
-// 注册 reducer
-store.setUpdaters({
-  name: nameUpdater,
-  age: ageUpdater
-});
+const dreamUpdater = (state, action) => {
+  if (action.type === 'info') {
+    return action.dream
+  }
+  return state;
+}
+
+const childsUpdater = (state, action) => {
+  if (action.type === 'info') {
+    return state.concat(action.item);
+  }
+  return state;
+}
+
+const infoUpdater = (state, action) => {
+  if (typeof state === undefined) {
+    return { dream: '', childs: [] }
+  }
+  switch (action.type) {
+    case 'info':
+      return combineReducer({dream: dreamUpdater, childs: childsUpdater })(state, action);
+    default:
+      return state;
+  }
+}
+
+const reducer = combineReducer({ name: nameUpdater, age: ageUpdater, info: infoUpdater });
+
+const store = createStore(reducer, { name: 'xiao hong', age: 30 , info: { dream: '', childs: []} });
+
 
 // 注册监听
 store.on('change', (state) => {
@@ -70,11 +93,17 @@ function fetch(store) {
 store.addMiddleWare([logger, fetch]);
 
 (async () => {
-  (await store.dispatch({
-    type: 'changeName',
-    payload: 'xiao yang',
-    url: 'xxxx'
-  })).dispatch({
-    type: '+'
+  // (await store.dispatch({
+  //   type: 'changeName',
+  //   payload: 'xiao yang',
+  //   url: 'xxxx'
+  // }))
+  // store.dispatch({
+  //   type: '+'
+  // });
+  store.dispatch({
+    type: 'info',
+    item: 'baby',
+    dream: 'to be a baby'
   });
 })()

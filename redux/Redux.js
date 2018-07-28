@@ -10,8 +10,27 @@ module.exports = class Redux extends EventEmitter{
     return JSON.parse(JSON.stringify(this._state));
   }
 
+  static combineReducer(reducers) {
+    return (state, action) => {
+      let newState = {};
+      Object.keys(reducers).forEach(key => {
+        newState[key] = reducers[key](state[key], action);
+      });
+      return newState;
+    }
+  }
+
+  static createStore(updaters, initialState) {
+    if(!Redux.instance) {
+      Redux.instance = new Redux(initialState).setUpdaters(updaters);
+    }
+    return Redux.instance;
+  }
+
   setUpdaters(updaters = () => {}) {
+    if(this.updaters) return this;
     this.updaters = updaters;
+    return this;
   }
 
   dispatch(action) {
