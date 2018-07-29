@@ -1,4 +1,4 @@
-const { createStore, combineReducer } = require('./Redux.js');
+const { createStore, combineReducer, bindActionCreator } = require('./Redux.js');
 
 const nameUpdater = (state, action) => {
   switch (action.type) {
@@ -45,9 +45,17 @@ const infoUpdater = (state, action) => {
   }
 }
 
-const reducer = combineReducer({ name: nameUpdater, age: ageUpdater, info: infoUpdater });
+const counterUpdater = (state, action) => {
+  if(action.type === 'increment') {
+    return action.counter
+  } else {
+    return state;
+  }
+}
 
-const store = createStore(reducer, { name: 'xiao hong', age: 30 , info: { dream: '', childs: []} });
+const reducer = combineReducer({ name: nameUpdater, age: ageUpdater, info: infoUpdater, counter: counterUpdater });
+
+const store = createStore(reducer, { name: 'xiao hong', age: 30 , counter: 1, info: { dream: '', childs: []} });
 
 
 // 注册监听
@@ -67,7 +75,7 @@ function logger (store) {
     } else {
       console.log('开始执行异步任务');
       await next.call(store, action);
-      console.log('异步任务执行结束')
+      console.log('异步任务执行结束');
     }
     return store;
   }
@@ -90,7 +98,29 @@ function fetch(store) {
   }
 }
 
-store.addMiddleWare([logger, fetch]);
+function fetchAsync(store) {
+  const next = store.dispatch;
+  store.dispatch = (action) => {
+    if(typeof action === 'function') {
+      action(next, store.state);
+    } else {
+      next.call(store, action);
+    }
+  }
+}
+
+store.addMiddleWare([logger, fetch, fetchAsync]);
+
+function incrementifOdd(number) {
+  return (dispatch, state) => {
+    const { counter } = state;
+    if(counter % 2 === 0) return;
+    dispatch({
+      type: 'increment',
+      counter: counter + number
+    });
+  }
+}
 
 (async () => {
   // (await store.dispatch({
@@ -107,3 +137,21 @@ store.addMiddleWare([logger, fetch]);
     dream: 'to be a baby'
   });
 })()
+
+// const a = function(name) {
+//   return {
+//     type: 'changeName',
+//     payload: name
+//   };
+// }
+// const b = function() {
+//   return {
+//     type: '+'
+//   }
+// }
+
+store.dispatch(incrementifOdd(3));
+
+// const actions = bindActionCreator({a,b}, store.dispatch);
+// actions.a('xiao miaomi');
+// actions.b();

@@ -1,13 +1,24 @@
 const EventEmitter = require('./EventEmitter.js');
 
-module.exports = class Redux extends EventEmitter{
+module.exports = class Redux extends EventEmitter {
   constructor(state = {}) {
     super();
     this._state = state;
+    this.dispatch = this.dispatch.bind(this);
   }
 
   get state() {
     return JSON.parse(JSON.stringify(this._state));
+  }
+
+  static bindActionCreator(actions, dispatch) {
+    const result = {};
+    Object.keys(actions).forEach(key => {
+      result[key] = (...args) => {
+        dispatch(actions[key](...args));
+      }
+    });
+    return result;
   }
 
   static combineReducer(reducers) {
@@ -17,24 +28,24 @@ module.exports = class Redux extends EventEmitter{
         newState[key] = reducers[key](state[key], action);
       });
       return newState;
-    }
+    };
   }
 
   static createStore(updaters, initialState) {
-    if(!Redux.instance) {
+    if (!Redux.instance) {
       Redux.instance = new Redux(initialState).setUpdaters(updaters);
     }
     return Redux.instance;
   }
 
   setUpdaters(updaters = () => {}) {
-    if(this.updaters) return this;
+    if (this.updaters) return this;
     this.updaters = updaters;
     return this;
   }
 
   dispatch(action) {
-    if (typeof this.updaters === 'function') {
+    if (typeof this.updaters === "function") {
       this._state = this.updaters(this.state, action);
     } else {
       let newState = {
@@ -45,17 +56,17 @@ module.exports = class Redux extends EventEmitter{
       });
       this._state = newState;
     }
-    this.emit('change', this.state);
+    this.emit("change", this.state);
     return this;
   }
 
   addMiddleWare(middles) {
-    if (typeof middles === 'function') {
+    if (typeof middles === "function") {
       middles(this);
-    } else if(middles instanceof Array) {
+    } else if (middles instanceof Array) {
       middles.reverse().forEach(middle => {
         middle(this);
       });
     }
   }
-}
+};
