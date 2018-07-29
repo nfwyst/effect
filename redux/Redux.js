@@ -32,6 +32,9 @@ module.exports = class Redux extends EventEmitter {
   }
 
   static createStore(updaters, initialState) {
+    if(typeof initialState === 'function') {
+      return initialState(Redux.createStore)(updaters, undefined);
+    }
     if (!Redux.instance) {
       Redux.instance = new Redux(initialState).setUpdaters(updaters);
     }
