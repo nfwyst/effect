@@ -80,4 +80,14 @@ module.exports = class Redux extends EventEmitter {
         return store;
     }
   }
+
+  static connect(getState, getActions) {
+    return Component => props => {
+      let state = getState(props.store.state);
+      let actions = getActions();
+      props.store.on('change', () => { Component.prototype = Object.assign({}, Component.prototype, getState(props.store.state)) });
+      Component.prototype = Object.assign({}, Component.prototype, state, actions);
+      return Component;
+    }
+  }
 };

@@ -68,12 +68,12 @@ function logger ({ dispatch }) {
   return async action => {
     if (!action.url) {
       console.log('开始执行同步命令');
-      dispatch.call(store, action);
+      dispatch(action);
       console.log('同步命令执行结束');
       return store;
     } else {
       console.log('开始执行异步任务');
-      await dispatch.call(store, action);
+      await dispatch(action);
       console.log('异步任务执行结束');
     }
     return store;
