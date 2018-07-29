@@ -69,4 +69,12 @@ module.exports = class Redux extends EventEmitter {
       });
     }
   }
+
+  applyMiddleWare(...args) {
+    return creator => (updaters, initialState) => {
+        const store = creator(updaters, initialState);
+        store.addMiddleWare(args);
+        return store;
+    }
+  }
 };
