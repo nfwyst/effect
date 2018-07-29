@@ -64,47 +64,44 @@ store.on('change', (state) => {
 });
 
 // 定义中间件
-function logger (store) {
-  const next = store.dispatch;
-  store.dispatch = async (action) => {
-    if(!action.url) {
+function logger ({ dispatch }) {
+  return async action => {
+    if (!action.url) {
       console.log('开始执行同步命令');
-      next.call(store, action);
+      dispatch.call(store, action);
       console.log('同步命令执行结束');
       return store;
     } else {
       console.log('开始执行异步任务');
-      await next.call(store, action);
+      await dispatch.call(store, action);
       console.log('异步任务执行结束');
     }
     return store;
   }
 }
-function fetch(store) {
-  const next = store.dispatch;
-  store.dispatch = async (action) => {
+function fetch({ dispatch }) {
+  return async (action) => {
     if(action.url) {
-      await new Promise((resolve, reject) => {
+      await new Promise((resolve) => {
         setTimeout(() => {
           action.payload = 'from ajax';
-          next.call(store, action);
+          dispatch(action);
           resolve();
         }, 1000);
       });
     } else {
-      next.call(store, action)
+      dispatch(action);
     }
     return store;
   }
 }
 
-function fetchAsync(store) {
-  const next = store.dispatch;
-  store.dispatch = (action) => {
+function fetchAsync({ dispatch, state }) {
+  return (action) => {
     if(typeof action === 'function') {
-      action(next, store.state);
+      action(dispatch, state);
     } else {
-      next.call(store, action);
+      dispatch(action);
     }
   }
 }

@@ -65,10 +65,10 @@ module.exports = class Redux extends EventEmitter {
 
   addMiddleWare(middles) {
     if (typeof middles === "function") {
-      middles(this);
+      this.dispatch = middles(this);
     } else if (middles instanceof Array) {
       middles.reverse().forEach(middle => {
-        middle(this);
+        this.dispatch = middle(this);
       });
     }
   }
